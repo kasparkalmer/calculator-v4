@@ -4,15 +4,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: './src/index',
   output: {
     path: path.resolve(__dirname, 'docs'),
-    filename: '[name].js'
+    filename: 'app.js'
   },
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'public')
-    }
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   plugins: [
     new HtmlWebpackPlugin(
@@ -26,6 +24,11 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
       {
         test: /\.css$/,
         use: [
